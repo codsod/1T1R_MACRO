@@ -1,0 +1,15 @@
+/.cadence
+/.claude
+/.vscode
+/20251003_sub_array_analog_total
+/common
+/csrc
+/doc
+/list
+/rram_lib
+/src
+/syn
+/tools
+/verif
+package.json
+package-lock.json

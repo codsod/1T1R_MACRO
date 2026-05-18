@@ -553,6 +553,25 @@ class llc_opa_agent extends uvm_agent;
     endfunction
 endclass
 EOF
+
+class llc_cfg_agent extends uvm_agent;
+    `uvm_component_utils(llc_cfg_agent)
+    llc_cfg_driver    driver;
+    llc_cfg_monitor   monitor;
+    uvm_sequencer #(llc_in_tr) sequencer;
+
+    function void build_phase(uvm_phase phase);
+        super.build_phase(phase);
+        monitor   = llc_cfg_monitor::type_id::create("monitor", this);
+        driver    = llc_cfg_driver::type_id::create("driver", this);
+        sequencer = uvm_sequencer #(llc_in_tr)::type_id::create("sequencer", this);
+    endfunction
+
+    function void connect_phase(uvm_phase phase);
+        super.connect_phase(phase);
+        driver.seq_item_port.connect(sequencer.seq_item_export);
+    endfunction
+endclass
 ```
 
 #### Mode Agent（`agent/llc_cfg_agent.sv`）
@@ -609,6 +628,25 @@ class llc_cfg_monitor extends uvm_monitor;
     endtask
 endclass
 EOF
+
+class llc_cfg_agent extends uvm_agent;
+    `uvm_component_utils(llc_cfg_agent)
+    llc_cfg_driver    driver;
+    llc_cfg_monitor   monitor;
+    uvm_sequencer #(llc_in_tr) sequencer;
+
+    function void build_phase(uvm_phase phase);
+        super.build_phase(phase);
+        monitor   = llc_cfg_monitor::type_id::create("monitor", this);
+        driver    = llc_cfg_driver::type_id::create("driver", this);
+        sequencer = uvm_sequencer #(llc_in_tr)::type_id::create("sequencer", this);
+    endfunction
+
+    function void connect_phase(uvm_phase phase);
+        super.connect_phase(phase);
+        driver.seq_item_port.connect(sequencer.seq_item_export);
+    endfunction
+endclass
 ```
 
 #### Out Agent（`agent/llc_out_agent.sv`）
@@ -651,6 +689,25 @@ class llc_out_agent extends uvm_agent;
     endfunction
 endclass
 EOF
+
+class llc_cfg_agent extends uvm_agent;
+    `uvm_component_utils(llc_cfg_agent)
+    llc_cfg_driver    driver;
+    llc_cfg_monitor   monitor;
+    uvm_sequencer #(llc_in_tr) sequencer;
+
+    function void build_phase(uvm_phase phase);
+        super.build_phase(phase);
+        monitor   = llc_cfg_monitor::type_id::create("monitor", this);
+        driver    = llc_cfg_driver::type_id::create("driver", this);
+        sequencer = uvm_sequencer #(llc_in_tr)::type_id::create("sequencer", this);
+    endfunction
+
+    function void connect_phase(uvm_phase phase);
+        super.connect_phase(phase);
+        driver.seq_item_port.connect(sequencer.seq_item_export);
+    endfunction
+endclass
 ```
 
 ### 5.6 Step 6 — Scoreboard（`env/llc_scoreboard.sv`）
@@ -731,6 +788,25 @@ class llc_scoreboard extends uvm_scoreboard;
     endfunction
 endclass
 EOF
+
+class llc_cfg_agent extends uvm_agent;
+    `uvm_component_utils(llc_cfg_agent)
+    llc_cfg_driver    driver;
+    llc_cfg_monitor   monitor;
+    uvm_sequencer #(llc_in_tr) sequencer;
+
+    function void build_phase(uvm_phase phase);
+        super.build_phase(phase);
+        monitor   = llc_cfg_monitor::type_id::create("monitor", this);
+        driver    = llc_cfg_driver::type_id::create("driver", this);
+        sequencer = uvm_sequencer #(llc_in_tr)::type_id::create("sequencer", this);
+    endfunction
+
+    function void connect_phase(uvm_phase phase);
+        super.connect_phase(phase);
+        driver.seq_item_port.connect(sequencer.seq_item_export);
+    endfunction
+endclass
 ```
 
 ### 5.7 Step 8 — Env（`env/llc_env.sv`）
@@ -768,6 +844,25 @@ class llc_env extends uvm_env;
     endfunction
 endclass
 EOF
+
+class llc_cfg_agent extends uvm_agent;
+    `uvm_component_utils(llc_cfg_agent)
+    llc_cfg_driver    driver;
+    llc_cfg_monitor   monitor;
+    uvm_sequencer #(llc_in_tr) sequencer;
+
+    function void build_phase(uvm_phase phase);
+        super.build_phase(phase);
+        monitor   = llc_cfg_monitor::type_id::create("monitor", this);
+        driver    = llc_cfg_driver::type_id::create("driver", this);
+        sequencer = uvm_sequencer #(llc_in_tr)::type_id::create("sequencer", this);
+    endfunction
+
+    function void connect_phase(uvm_phase phase);
+        super.connect_phase(phase);
+        driver.seq_item_port.connect(sequencer.seq_item_export);
+    endfunction
+endclass
 ```
 
 ### 5.8 Step 9~12 — Sequence 和 Test
@@ -785,6 +880,25 @@ class llc_base_seq extends uvm_sequence #(llc_in_tr);
     endfunction
 endclass
 EOF
+
+class llc_cfg_agent extends uvm_agent;
+    `uvm_component_utils(llc_cfg_agent)
+    llc_cfg_driver    driver;
+    llc_cfg_monitor   monitor;
+    uvm_sequencer #(llc_in_tr) sequencer;
+
+    function void build_phase(uvm_phase phase);
+        super.build_phase(phase);
+        monitor   = llc_cfg_monitor::type_id::create("monitor", this);
+        driver    = llc_cfg_driver::type_id::create("driver", this);
+        sequencer = uvm_sequencer #(llc_in_tr)::type_id::create("sequencer", this);
+    endfunction
+
+    function void connect_phase(uvm_phase phase);
+        super.connect_phase(phase);
+        driver.seq_item_port.connect(sequencer.seq_item_export);
+    endfunction
+endclass
 ```
 
 #### INT16 Sequence（`seq/llc_int16_seq.sv`）
@@ -807,6 +921,25 @@ class llc_int16_seq extends llc_base_seq;
     endtask
 endclass
 EOF
+
+class llc_cfg_agent extends uvm_agent;
+    `uvm_component_utils(llc_cfg_agent)
+    llc_cfg_driver    driver;
+    llc_cfg_monitor   monitor;
+    uvm_sequencer #(llc_in_tr) sequencer;
+
+    function void build_phase(uvm_phase phase);
+        super.build_phase(phase);
+        monitor   = llc_cfg_monitor::type_id::create("monitor", this);
+        driver    = llc_cfg_driver::type_id::create("driver", this);
+        sequencer = uvm_sequencer #(llc_in_tr)::type_id::create("sequencer", this);
+    endfunction
+
+    function void connect_phase(uvm_phase phase);
+        super.connect_phase(phase);
+        driver.seq_item_port.connect(sequencer.seq_item_export);
+    endfunction
+endclass
 ```
 
 #### Base Test（`test/llc_base_test.sv`）
@@ -827,6 +960,25 @@ class llc_base_test extends uvm_test;
     endfunction
 endclass
 EOF
+
+class llc_cfg_agent extends uvm_agent;
+    `uvm_component_utils(llc_cfg_agent)
+    llc_cfg_driver    driver;
+    llc_cfg_monitor   monitor;
+    uvm_sequencer #(llc_in_tr) sequencer;
+
+    function void build_phase(uvm_phase phase);
+        super.build_phase(phase);
+        monitor   = llc_cfg_monitor::type_id::create("monitor", this);
+        driver    = llc_cfg_driver::type_id::create("driver", this);
+        sequencer = uvm_sequencer #(llc_in_tr)::type_id::create("sequencer", this);
+    endfunction
+
+    function void connect_phase(uvm_phase phase);
+        super.connect_phase(phase);
+        driver.seq_item_port.connect(sequencer.seq_item_export);
+    endfunction
+endclass
 ```
 
 #### INT16 Test（`test/test_int16_random.sv`）
@@ -850,6 +1002,25 @@ class test_int16_random extends llc_base_test;
     endtask
 endclass
 EOF
+
+class llc_cfg_agent extends uvm_agent;
+    `uvm_component_utils(llc_cfg_agent)
+    llc_cfg_driver    driver;
+    llc_cfg_monitor   monitor;
+    uvm_sequencer #(llc_in_tr) sequencer;
+
+    function void build_phase(uvm_phase phase);
+        super.build_phase(phase);
+        monitor   = llc_cfg_monitor::type_id::create("monitor", this);
+        driver    = llc_cfg_driver::type_id::create("driver", this);
+        sequencer = uvm_sequencer #(llc_in_tr)::type_id::create("sequencer", this);
+    endfunction
+
+    function void connect_phase(uvm_phase phase);
+        super.connect_phase(phase);
+        driver.seq_item_port.connect(sequencer.seq_item_export);
+    endfunction
+endclass
 ```
 
 ### 5.9 Step 13 — Testbench Top（`tb/llc_tb_top.sv`）

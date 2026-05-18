@@ -11,7 +11,7 @@ interface llc_if (input bit clk);
     logic               vldo;
     logic [41:0]        out;
 
-    // driver使用的clocking bloc (避免竞争)
+    // driver使用的clocking block (避免竞争)
     clocking drv_cb @(posedge clk);
         default input #1ns output #1ns;
         output rstn, vldi, mode, opa, opb, mask;

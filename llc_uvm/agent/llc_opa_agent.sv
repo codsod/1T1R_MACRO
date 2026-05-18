@@ -1,5 +1,9 @@
 class llc_opa_driver extends uvm_driver #(llc_in_tr); 
     `uvm_component_utils(llc_opa_driver)
+    function new(string name, uvm_component parent);
+        super.new(name, parent);
+    endfunction
+
     
     virtual llc_if vif;
 
@@ -37,6 +41,10 @@ endclass
 
 class llc_opa_monitor extends uvm_monitor; 
     `uvm_component_utils(llc_opa_monitor)
+    function new(string name, uvm_component parent);
+        super.new(name, parent);
+    endfunction
+
 
     virtual llc_if vif;
     uvm_analysis_port #(llc_in_tr) item_collected_port;
@@ -66,6 +74,10 @@ endclass
 
 class llc_opa_agent extends uvm_agent; 
     `uvm_component_utils(llc_opa_agent)
+    function new(string name, uvm_component parent);
+        super.new(name, parent);
+    endfunction
+
 
     llc_opa_driver driver;
     llc_opa_monitor monitor;

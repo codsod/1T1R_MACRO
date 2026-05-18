@@ -1,5 +1,9 @@
 class llc_out_monitor extends uvm_monitor;
     `uvm_component_utils(llc_out_monitor)
+    function new(string name, uvm_component parent);
+        super.new(name, parent);
+    endfunction
+
 
     virtual llc_if vif;
     uvm_analysis_port #(llc_out_tr) item_collected_port;
@@ -27,6 +31,10 @@ endclass
 
 class llc_out_agent extends uvm_agent;
     `uvm_component_utils(llc_out_agent)
+    function new(string name, uvm_component parent);
+        super.new(name, parent);
+    endfunction
+
     llc_out_monitor monitor;
 
     function void build_phase(uvm_phase phase);

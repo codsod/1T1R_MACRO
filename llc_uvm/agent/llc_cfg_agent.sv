@@ -2,6 +2,10 @@
 // 由于 mode_reg 存储在 DUT 中，需要与数据同步
 class llc_cfg_driver extends uvm_driver #(llc_in_tr);
     `uvm_component_utils(llc_cfg_driver)
+    function new(string name, uvm_component parent);
+        super.new(name, parent);
+    endfunction
+
     virtual llc_if vif;
 
     function void build_phase(uvm_phase phase);
@@ -25,6 +29,10 @@ endclass
 
 class llc_cfg_monitor extends uvm_monitor; 
     `uvm_component_utils(llc_cfg_monitor)
+    function new(string name, uvm_component parent);
+        super.new(name, parent);
+    endfunction
+
     
     virtual llc_if vif;
     uvm_analysis_port #(llc_in_tr) item_collected_port;
@@ -50,6 +58,10 @@ endclass
 
 class llc_cfg_agent extends uvm_agent;
     `uvm_component_utils(llc_cfg_agent)
+    function new(string name, uvm_component parent);
+        super.new(name, parent);
+    endfunction
+
     llc_cfg_driver driver;
     llc_cfg_monitor monitor;
     uvm_sequencer #(llc_in_tr) sequencer;

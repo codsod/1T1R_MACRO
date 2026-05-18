@@ -25,5 +25,53 @@ class llc_scoreboard extends uvm_scoreboard;
         out_op_imp = new("out_op_imp", this);
     endfunction
 
-    
+    function void write_in_op(llc_in_tr tr);
+        bit signed [41:0] expected;
+        expected = llc_ref_model(tr.opa, tr.opb, tr.mask, tr.mode);
+        exp_q.push_back(expected);
+        `uvm_info("SCBD", $sformatf(
+            "IN:  opa=0x%0h opb=0x%0h mask=0x%0h mode=%0d exp=0x%0h",
+            tr.opa, tr.opb, tr.mask, tr.mode, expected), UVM_HIGH)
+    endfunction
+
+    function void write_out_op(llc_out_tr tr); 
+        bit signed [41:0] expected;
+        total_checked++;
+
+        if(exp_q.size() == 0) begin
+            `uvm_error("SCBD", $sformatf("
+                OUT without matching IN: out=0x%0h cycle=%0d",
+                tr.out, tr.cycle))
+            total_failed++;
+            return;
+        end
+
+        expected = exp_q.pop_front();
+
+        if(tr.out != expected) begin
+            `uvm_error("SCBD", $sformatf(
+                "MISMATCH: got=0x%0h (%-0d) expected=0x%0h (%-0d) cycle=%0d",
+                tr.out, $signed(tr.out),
+                expected, $signed(expected), tr.cycle))
+            total_failed++;
+        end else begin 
+            `uvm_info("SCBD", $sformatf(
+                "PASS: out=0x%0h (%-0d) cycle=%0d",
+                tr.out, $signed(tr.out), tr.cycle), UVM_HIGH)
+            total_passed++;
+        end
+    endfunction
+
+    function void report_phase(uvm_phase phase);
+        `uvm_info("SCBD", $sformatf(
+            "\n==================================================\n\
+             SCOREBOARD REPORT:\n\
+             Total checked : %0d\n\
+             Total passed  : %0d\n\
+             Total failed  : %0d\n\
+             FIFO remaining : %0d\n\
+             ==================================================",
+            total_checked, total_passed, total_failed, exp_q.size()), UVM_NONE)
+    endfunction
 endclass
+    

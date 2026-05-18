@@ -1,0 +1,190 @@
+ 针对你的 macro_llc,也就是 rram_1t1r_macro_llc,verification task 可以围绕这些点写:
+
+
+  - reset 后 vldo/out 是否清零
+  - vldi 输入后,vldo 是否延迟 3 拍拉高
+  - INT16/INT8/INT4/Tenary mode 下,out 是否等于 64 路乘法累加 golden
+  - mask 是否真的把被 mask 的 lane 清零
+  - vldi=0 时输入不应参与计算
+
+  几个 task 例子如下。
+
+  task reset_dut();
+    rstn = 1'b1;
+    vldi = 1'b0;
+    opa  = '0;
+    opb  = '0;
+    mode = '0;
+    mask = '0;
+
+    repeat (2) @(posedge clk);
+    #0.1 rstn = 1'b0;
+    repeat (2) @(posedge clk);
+    #0.1 rstn = 1'b1;
+    mask = {IN_WIDTH{1'b1}};
+    repeat (2) @(posedge clk);
+
+    if (vldo !== 1'b0 || out !== '0)
+      $error("RESET FAIL: vldo=%0b out=%0d", vldo, $signed(out));
+  endtask
+
+  task drive_macro_input(
+    input [2:0] mode_i,
+    input [IN_WIDTH-1:0] opa_i,
+    input [IN_WIDTH-1:0] opb_i,
+    input [IN_WIDTH-1:0] mask_i
+  );
+    @(posedge clk);
+    #0.1;
+    mode = mode_i;
+    opa  = opa_i;
+    opb  = opb_i;
+    mask = mask_i;
+    vldi = 1'b1;
+
+    @(posedge clk);
+    #0.1;
+    vldi = 1'b0;
+  endtask
+
+  macro_llc 里 vldo <= vldi_d[2],所以可以专门查 valid latency:
+
+  task check_vldo_latency();
+    drive_macro_input(3'd0, 1024'h1, 1024'h1, {IN_WIDTH{1'b1}});
+
+    repeat (2) @(posedge clk);
+    if (vldo !== 1'b0)
+      $error("VLDO FAIL: vldo asserted too early");
+
+    @(posedge clk);
+    if (vldo !== 1'b1)
+      $error("VLDO FAIL: vldo should assert after 3 cycles");
+  endtask
+
+  INT16 MAC 的 golden check 可以这样写:
+
+  task run_int16_mac_check(input integer case_id);
+    reg [IN_WIDTH-1:0] opa_vec;
+    reg [IN_WIDTH-1:0] opb_vec;
+    reg signed [15:0] a16;
+    reg signed [15:0] b16;
+    reg signed [DATA_W*4+10-1:0] exp;
+    integer lane;
+
+    opa_vec = '0;
+    opb_vec = '0;
+    exp = '0;
+
+    for (lane = 0; lane < IN_WIDTH/16; lane = lane + 1) begin
+      a16 = $random;
+      b16 = $random;
+      opa_vec[16*lane +: 16] = a16;
+      opb_vec[16*lane +: 16] = b16;
+      exp = exp + a16 * b16;
+    end
+
+    drive_macro_input(3'd0, opa_vec, opb_vec, {IN_WIDTH{1'b1}});
+
+    repeat (3) @(posedge clk);
+    if ($signed(out) !== exp)
+      $error("INT16 MAC FAIL case=%0d exp=%0d got=%0d",
+             case_id, exp, $signed(out));
+    else
+      $display("INT16 MAC PASS case=%0d out=%0d", case_id, $signed(out));
+  endtask
+
+  mask 功能可以单独测:
+
+  task run_mask_zero_check();
+    reg [IN_WIDTH-1:0] opa_vec;
+    reg [IN_WIDTH-1:0] opb_vec;
+    reg [IN_WIDTH-1:0] mask_vec;
+
+    opa_vec  = {IN_WIDTH{1'b1}};
+    opb_vec  = {IN_WIDTH{1'b1}};
+    mask_vec = '0;
+
+    drive_macro_input(3'd0, opa_vec, opb_vec, mask_vec);
+
+    repeat (3) @(posedge clk);
+    if ($signed(out) !== 0)
+      $error("MASK ZERO FAIL: exp=0 got=%0d", $signed(out));
+    else
+      $display("MASK ZERO PASS");
+  endtask
+
+  initial begin
+    reset_dut();
+
+    check_vldo_latency();
+
+    for (i = 0; i < 10; i = i + 1)
+      run_int16_mac_check(i);
+
+    run_mask_zero_check();
+
+    $finish;
+  end
+
+  你现在的 verif/macro_llc/testbench.sv 已经在做 INT16/INT8/INT4/Tenary 分段检查了；这些 task 的价值是把重复的 reset、drive、latency check、golden compare 封装起来,让 testbench 更短、更容易加 case。
+
+  task 是 testbench module 级别的代码块,后面在 initial begin ... end 里面调用:
+
+  initial begin
+    reset_dut();
+    run_int16_mac_check(0);
+    run_mask_zero_check();
+    $finish;
+  end
+
+  else
+    $display("RESET PASS");
+
+
+
+
+这是一个 RRAM(阻变存储器)存内计算(CIM)宏单元的数字设计,包含芯片顶层、控制逻辑、计算核心和调试模块。
+
+  层次结构
+
+  ┌────────────┬─────────────────────────────────────┬─────────────────────────────────────────────────────────────────────────┐
+  │    层级    │                文件                 │                                  作用                                   │
+  ├────────────┼─────────────────────────────────────┼─────────────────────────────────────────────────────────────────────────┤
+  │ 芯片顶层   │ rram_macro_top.sv / _modified.sv    │ 带 PAD 环的芯片顶层,例化 I/O pad 和 rram_macro_llc_top                 │
+  ├────────────┼─────────────────────────────────────┼─────────────────────────────────────────────────────────────────────────┤
+  │ 配置控制层 │ rram_macro_llc_top.sv               │ 扫描链配置模块,通过串行移位寄存器配置 trim/时序/字线                   │
+  ├────────────┼─────────────────────────────────────┼─────────────────────────────────────────────────────────────────────────┤
+  │            │ * rram_macro_llc_top_with_subarray.sv │ 同上,但额外例化了模拟 subarray                                         │
+  ├────────────┼─────────────────────────────────────┼─────────────────────────────────────────────────────────────────────────┤
+  │ 高层宏     │ rram_macro.sv                       │ 8 通道宏单元,每通道 = 1 个模拟 subarray + 1 个 debug_buffer + 1 个 LLC │
+  ├────────────┼─────────────────────────────────────┼─────────────────────────────────────────────────────────────────────────┤
+  │ 计算核心   │ * rram_1t1r_macro_llc.sv              │ CIM 计算 LLC:64 个乘法器 + 3 级加法树,支持 INT16/INT8/INT4/Ternary    │
+  ├────────────┼─────────────────────────────────────┼─────────────────────────────────────────────────────────────────────────┤
+  │            │ rram_1t1r_macro_llc_ra.sv           │ 同上但缩小累加位宽,省面积版本                                          │
+  ├────────────┼─────────────────────────────────────┼─────────────────────────────────────────────────────────────────────────┤
+  │ 乘法器     │ * mult_int16.sv                       │ 多模式有符号乘法器(INT16/INT8/INT4/BF16/Ternary),Booth 风格分解      │
+  ├────────────┼─────────────────────────────────────┼─────────────────────────────────────────────────────────────────────────┤
+  │            │ mult_int8.sv                        │ 简单无符号 8 位乘法器                                                   │
+  ├────────────┼─────────────────────────────────────┼─────────────────────────────────────────────────────────────────────────┤
+  │ 调试       │ debug_buffer.sv                     │ 调试数据捕获 buffer,支持扫描读出                                       │
+  ├────────────┼─────────────────────────────────────┼─────────────────────────────────────────────────────────────────────────┤
+  │            │ debug_ctrl.sv                       │ 调试信号路由 MUX                                                        │
+  ├────────────┼─────────────────────────────────────┼─────────────────────────────────────────────────────────────────────────┤
+  │ 工具       │ wl_decoder.sv                       │ 9→288 位字线译码器                                                      │
+  ├────────────┼─────────────────────────────────────┼─────────────────────────────────────────────────────────────────────────┤
+  │ 行为模型   │ rram_1t1r_macro.sv                  │ 纯 RTL 行为级宏模型(用寄存器阵列代替真实模拟 RRAM)                    │
+  ├────────────┼─────────────────────────────────────┼─────────────────────────────────────────────────────────────────────────┤
+  │            │ rram_1t1r_subarray.sv               │ 行为级 subarray 寄存器阵列                                              │
+  └────────────┴─────────────────────────────────────┴─────────────────────────────────────────────────────────────────────────┘
+
+  推荐阅读顺序
+
+  1. rram_macro_top_modified.sv     ← 芯片顶层,先了解整体 IO
+  2. rram_macro.sv                  ← 8 通道宏单元组织
+  3. rram_macro_llc_top.sv          ← 扫描链配置控制
+  4. rram_1t1r_macro_llc.sv         ← 计算核心(最关键的模块)
+  5. mult_int16.sv                  ← 多模式乘法器
+  6. debug_buffer.sv → debug_ctrl.sv ← 调试链路
+  7. rram_1t1r_macro.sv → rram_1t1r_subarray.sv ← 行为级仿真模型
+  8. rram_1t1r_macro_llc_ra.sv      ← 省面积变体
+  9. wl_decoder.sv / mult_int8.sv   ← 叶子工具模块

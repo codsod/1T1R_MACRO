@@ -1,0 +1,7 @@
+Command Line: /data/eda/synopsys/vcs/O-2018.09-SP2/linux64/bin/elabcom -logdir /data/kzhang/workplace/1T1R_MACRO/llc_uvm/scripts/simv.daidir/elabcomLog -simvdaidir /data/kzhang/workplace/1T1R_MACRO/llc_uvm/scripts/simv.daidir -lib /data/kzhang/workplace/1T1R_MACRO/llc_uvm/scripts/simv.daidir/work -saveLevel -elab /data/kzhang/workplace/1T1R_MACRO/llc_uvm/scripts/simv.daidir/kdb -simflow -simdir /data/kzhang/workplace/1T1R_MACRO/llc_uvm/scripts/simv.daidir/kdb_libs -top uvm_custom_install_verdi_recording llc_tb_top -ssv -ssy -Lf work +disable_message+C00380+C00381 +disable_message+C00388+C00389
+uname(Linux yaoyu01 3.10.0-1160.119.1.el7.x86_64 #1 SMP Tue Jun 4 14:43:51 UTC 2024 x86_64)
+[INFO] error/warning message 'C00380' has been suppressed.
+[INFO] error/warning message 'C00381' has been suppressed.
+[INFO] error/warning message 'C00388' has been suppressed.
+[INFO] error/warning message 'C00389' has been suppressed.
+au time 0.255086 0.182786 0.027123 delta 110194688 110194688 total 202379264 202379264

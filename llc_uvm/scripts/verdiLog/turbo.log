@@ -1,0 +1,3 @@
+Command Line: /data/eda/synopsys/verdi/Verdi_O-2018.09-SP2/platform/LINUXAMD64/bin/Novas -ssf llc_uvm.fsdb
+uname(Linux yaoyu01 3.10.0-1160.119.1.el7.x86_64 #1 SMP Tue Jun 4 14:43:51 UTC 2024 x86_64)
+au time 6.138718 1.827089 0.138585 delta 239288320 239288320 total 664379392 664379392

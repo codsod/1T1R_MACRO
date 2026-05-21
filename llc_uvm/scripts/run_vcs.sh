@@ -15,7 +15,7 @@ UVM_FILES="\
     ../env/llc_env.sv \
     ../seq/llc_base_seq.sv \
     ../seq/llc_int16_seq.sv \
-    ../test/llc_base_test.sv \
+    ../seq/llc_base_test.sv \
     ../test/test_int16_random.sv \
     ../tb/llc_tb_top.sv"
 
@@ -42,6 +42,3 @@ vcs -sverilog -full64 \
 
 # ---- 检查结果 ----
 grep -E "UVM_ERROR|UVM_FATAL|PASS|FAIL|SCOREBOARD REPORT" sim.log
-EOF
-
-chmod +x scripts/run_vcs.sh

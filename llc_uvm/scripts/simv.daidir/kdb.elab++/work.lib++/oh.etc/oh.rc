@@ -1,0 +1,6 @@
+@elabcom rc file Version 1.0
+[oh]
+invokeDir = /data/kzhang/workplace/1T1R_MACRO/llc_uvm/scripts
+hostCommand = -lib /data/kzhang/workplace/1T1R_MACRO/llc_uvm/scripts/simv.daidir/work -saveLevel -elab /data/kzhang/workplace/1T1R_MACRO/llc_uvm/scripts/simv.daidir/kdb -simflow -simdir /data/kzhang/workplace/1T1R_MACRO/llc_uvm/scripts/simv.daidir/kdb_libs -top "uvm_cus\
+tom_install_verdi_recording llc_tb_top" -Lf work +disable_message+C00380+C00381 +disable_message+C00388+C00389 -SNPS_ELABCOM -saveElab
+simType = VCS

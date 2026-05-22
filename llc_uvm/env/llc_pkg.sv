@@ -56,6 +56,7 @@ package llc_pkg;
         int signed a_hi, b_hi;
         int unsigned a_lo, b_lo;
         longint signed p0, p1, p2, p3;
+        longint signed tmp0, tmp1, tmp2, tmp3;
         bit signed [16:0] tp[4], tp2[4];
         bit signed [1:0] t0_a, t0_b, t1_a, t1_b;
         bit signed [1:0] t2_a, t2_b, t3_a, t3_b;
@@ -75,12 +76,15 @@ package llc_pkg;
             p1 = a_hi * b_lo;
             p2 = a_lo * b_hi;
             p3 = a_lo * b_lo;
-            return (p0 * 65536) + ((p1 + p2) * 256) + p3;
-        end
-        1: begin      // INT8
-            return $signed(opa_2) * $signed(opb_2)
-                 + $signed(opa_1) * $signed(opb_1);
-        end
+            tmp0 = p0 << 16;
+            tmp1 = p1 << 8;
+            tmp2 = p2 << 8;
+            tmp3 = p3;
+            return tmp0 + tmp1 + tmp2 + tmp3;
+        end;
+        1:begin
+            return $signed(opa_1) * $signed(opb_1) + $signed(opa_2) * $signed(opb_2);
+        end;
         2: begin      // INT4
             return $signed(opa_1[3:0]) * $signed(opb_1[3:0])
                  + $signed(opa_1[7:4]) * $signed(opb_1[7:4])

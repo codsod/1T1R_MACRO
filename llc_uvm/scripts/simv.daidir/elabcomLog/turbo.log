@@ -4,4 +4,4 @@ uname(Linux yaoyu01 3.10.0-1160.119.1.el7.x86_64 #1 SMP Tue Jun 4 14:43:51 UTC 2
 [INFO] error/warning message 'C00381' has been suppressed.
 [INFO] error/warning message 'C00388' has been suppressed.
 [INFO] error/warning message 'C00389' has been suppressed.
-au time 0.255086 0.182786 0.027123 delta 110194688 110194688 total 202379264 202379264
+au time 0.213972 0.182399 0.026072 delta 110194688 110194688 total 202379264 202379264

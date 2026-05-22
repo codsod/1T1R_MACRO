@@ -5,5 +5,5 @@ PYTHONPATH=/data/eda/synopsys/vcs/O-2018.09-SP2/linux64/lib/pylib27
 export PYTHONPATH
 LD_LIBRARY_PATH=/data/eda/synopsys/vcs/O-2018.09-SP2/linux64/lib:/data/eda/synopsys/vcs/O-2018.09-SP2/linux64/lib/pylib27
 export LD_LIBRARY_PATH
-/data/eda/synopsys/vcs/O-2018.09-SP2/linux64/bin/vcsfind_create_index.exe  -z  "/data/kzhang/workplace/1T1R_MACRO/llc_uvm/scripts/simv.daidir/debug_dump/fsearch/./idents_tapi.xml.gz" "/data/kzhang/workplace/1T1R_MACRO/llc_uvm/scripts/simv.daidir/debug_dump/fsearch/./idents_FWgjSa.xml.gz" -o "/data/kzhang/workplace/1T1R_MACRO/llc_uvm/scripts/simv.daidir/debug_dump/fsearch/fsearch.db_tmp"
+/data/eda/synopsys/vcs/O-2018.09-SP2/linux64/bin/vcsfind_create_index.exe  -z  "/data/kzhang/workplace/1T1R_MACRO/llc_uvm/scripts/simv.daidir/debug_dump/fsearch/./idents_mJ6IMc.xml.gz" "/data/kzhang/workplace/1T1R_MACRO/llc_uvm/scripts/simv.daidir/debug_dump/fsearch/./idents_tapi.xml.gz" -o "/data/kzhang/workplace/1T1R_MACRO/llc_uvm/scripts/simv.daidir/debug_dump/fsearch/fsearch.db_tmp"
 \mv "/data/kzhang/workplace/1T1R_MACRO/llc_uvm/scripts/simv.daidir/debug_dump/fsearch/fsearch.db_tmp" "/data/kzhang/workplace/1T1R_MACRO/llc_uvm/scripts/simv.daidir/debug_dump/fsearch/fsearch.db"

@@ -1,7 +1,7 @@
 Command: /home/kzhang/workplace/1T1R_MACRO/llc_uvm/scripts/./simv +UVM_TESTNAME=test_int16_random +UVM_VERBOSITY=UVM_MEDIUM -l sim.log
 Chronologic VCS simulator copyright 1991-2018
 Contains Synopsys proprietary information.
-Compiler version O-2018.09-SP2_Full64; Runtime version O-2018.09-SP2_Full64;  May 20 15:58 2026
+Compiler version O-2018.09-SP2_Full64; Runtime version O-2018.09-SP2_Full64;  May 22 15:55 2026
 UVM_INFO /data/eda/synopsys/vcs/O-2018.09-SP2/etc/uvm-1.2/base/uvm_root.svh(402) @ 0: reporter [UVM/RELNOTES] 
 ----------------------------------------------------------------
 UVM-1.2.Synopsys
@@ -67,5 +67,5 @@ $finish called from file "/data/eda/synopsys/vcs/O-2018.09-SP2/etc/uvm-1.2/base/
 $finish at simulation time                31650
            V C S   S i m u l a t i o n   R e p o r t 
 Time: 316500 ps
-CPU Time:      0.330 seconds;       Data structure size:   0.7Mb
-Wed May 20 15:58:20 2026
+CPU Time:      0.320 seconds;       Data structure size:   0.7Mb
+Fri May 22 15:55:30 2026

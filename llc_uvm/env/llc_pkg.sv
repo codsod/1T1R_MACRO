@@ -81,10 +81,10 @@ package llc_pkg;
             tmp2 = p2 << 8;
             tmp3 = p3;
             return tmp0 + tmp1 + tmp2 + tmp3;
-        end;
+        end
         1:begin
             return $signed(opa_1) * $signed(opb_1) + $signed(opa_2) * $signed(opb_2);
-        end;
+        end
         2: begin      // INT4
             return $signed(opa_1[3:0]) * $signed(opb_1[3:0])
                  + $signed(opa_1[7:4]) * $signed(opb_1[7:4])

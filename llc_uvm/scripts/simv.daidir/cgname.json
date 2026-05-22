@@ -1,45 +1,9 @@
 {
-    "uvm_custom_install_verdi_recording": [
-        "uvm_custom_install_verdi_recording",
-        "EbjT3",
-        "module",
-        7
-    ],
-    "llc_pkg": [
-        "llc_pkg",
-        "VEEL6",
-        "module",
-        11
-    ],
     "_vcs_DPI_package": [
         "_vcs_DPI_package",
         "uM9F1",
         "module",
         1
-    ],
-    "_vcs_unit__1802996038": [
-        "_vcs_unit__1802996038",
-        "YJu8e",
-        "module",
-        3
-    ],
-    "llc_if": [
-        "llc_if",
-        "rwnky",
-        "module",
-        10
-    ],
-    "vcs_paramclassrepository": [
-        "vcs_paramclassrepository",
-        "hEeZs",
-        "module",
-        2
-    ],
-    "std": [
-        "std",
-        "reYIK",
-        "module",
-        4
     ],
     "mult_int16": [
         "mult_int16",
@@ -47,17 +11,17 @@
         "module",
         8
     ],
-    "rram_1t1r_macro_llc_0000": [
-        "rram_1t1r_macro_llc_0000",
-        "rfF9D",
+    "vcs_paramclassrepository": [
+        "vcs_paramclassrepository",
+        "hEeZs",
         "module",
-        9
+        2
     ],
-    "uvm_pkg": [
-        "uvm_pkg",
-        "zr7M1",
+    "...MASTER...": [
+        "SIM",
+        "amcQw",
         "module",
-        5
+        13
     ],
     "_vcs_msglog": [
         "_vcs_msglog",
@@ -65,16 +29,52 @@
         "module",
         6
     ],
+    "uvm_custom_install_verdi_recording": [
+        "uvm_custom_install_verdi_recording",
+        "EbjT3",
+        "module",
+        7
+    ],
+    "_vcs_unit__1802996038": [
+        "_vcs_unit__1802996038",
+        "YJu8e",
+        "module",
+        3
+    ],
+    "rram_1t1r_macro_llc_0000": [
+        "rram_1t1r_macro_llc_0000",
+        "rfF9D",
+        "module",
+        9
+    ],
+    "std": [
+        "std",
+        "reYIK",
+        "module",
+        4
+    ],
+    "uvm_pkg": [
+        "uvm_pkg",
+        "zr7M1",
+        "module",
+        5
+    ],
     "llc_tb_top": [
         "llc_tb_top",
         "bx1L8",
         "module",
         12
     ],
-    "...MASTER...": [
-        "SIM",
-        "amcQw",
+    "llc_if": [
+        "llc_if",
+        "rwnky",
         "module",
-        13
+        10
+    ],
+    "llc_pkg": [
+        "llc_pkg",
+        "VEEL6",
+        "module",
+        11
     ]
 }

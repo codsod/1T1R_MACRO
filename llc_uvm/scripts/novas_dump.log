@@ -275,8 +275,8 @@ argv[2]=+UVM_VERBOSITY=UVM_MEDIUM
 argv[3]=-l
 argv[4]=sim.log
 276 profile - 100
-          CPU/Mem usage: 0.030 sys,  0.150 user,  271.03M mem
-277 Fri May 22 15:55:29 2026
+          CPU/Mem usage: 0.040 sys,  0.150 user,  271.02M mem
+277 Fri May 22 16:36:52 2026
 278 pliAppInit
 279 FSDB_GATE is set.
 280 FSDB_RTL is set.
@@ -300,35 +300,35 @@ argv[4]=sim.log
 298 *Verdi* : Begin traversing the scope (llc_tb_top.dut), layer (0).
 299 *Verdi* : End of traversing.
 300 pliAppHDL_DumpVarComplete traverse var: profile - 
-          CPU/Mem usage: 0.040 sys,  0.190 user,  384.29M mem
-                   incr: 0.000 sys,  0.010 user,  8.53M mem
-                   accu: 0.000 sys,  0.010 user,  8.53M mem
-              accu incr: 0.000 sys,  0.010 user,  8.53M mem
+          CPU/Mem usage: 0.050 sys,  0.180 user,  384.29M mem
+                   incr: 0.010 sys,  0.000 user,  8.53M mem
+                   accu: 0.010 sys,  0.000 user,  8.53M mem
+              accu incr: 0.010 sys,  0.000 user,  8.53M mem
 
           Count usage: 2318 var,  2127 idcode,  2125 callback
                  incr: 2318 var,  2127 idcode,  2125 callback
                  accu: 2318 var,  2127 idcode,  2125 callback
             accu incr: 2318 var,  2127 idcode,  2125 callback
-301 Fri May 22 15:55:29 2026
+301 Fri May 22 16:36:53 2026
 302 pliAppHDL_DumpVarComplete: profile - 
-          CPU/Mem usage: 0.040 sys,  0.190 user,  385.35M mem
+          CPU/Mem usage: 0.050 sys,  0.180 user,  385.34M mem
                    incr: 0.000 sys,  0.000 user,  1.05M mem
-                   accu: 0.000 sys,  0.010 user,  9.58M mem
+                   accu: 0.010 sys,  0.000 user,  9.58M mem
               accu incr: 0.000 sys,  0.000 user,  1.05M mem
 
           Count usage: 2318 var,  2127 idcode,  2125 callback
                  incr: 0 var,  0 idcode,  0 callback
                  accu: 2318 var,  2127 idcode,  2125 callback
             accu incr: 0 var,  0 idcode,  0 callback
-303 Fri May 22 15:55:29 2026
-304 End of simulation at 31650
-305 Fri May 22 15:55:30 2026
+303 Fri May 22 16:36:53 2026
+304 End of simulation at 41650
+305 Fri May 22 16:36:53 2026
 306 Begin FSDB profile info:
-307 FSDB Writer : bc1(222) bcn(129896) mtf/stf(0/0)
-FSDB Writer elapsed time : flush(0.021181) io wait(0.000000) theadpool wait(0.000000) target functin(0.000000)
+307 FSDB Writer : bc1(290) bcn(131133) mtf/stf(0/0)
+FSDB Writer elapsed time : flush(0.021401) io wait(0.000000) theadpool wait(0.000000) target functin(0.000000)
 FSDB Writer cpu time : MT Compression : 0
 308 End FSDB profile info
 309 Parallel profile    -  Flush:3 Expand:0 ProduceWait:0 ConsumerWait:0 BlockUsed:1
-310                        ProduceTime:0.332961090 ConsumerTime:0.005208483 Buffer:64MB
+310                        ProduceTime:0.336972271 ConsumerTime:0.005098908 Buffer:64MB
 311 SimExit
 312 Sim process exit

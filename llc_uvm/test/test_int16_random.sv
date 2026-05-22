@@ -15,6 +15,7 @@ class test_int16_random extends llc_base_test;
         `uvm_info("TEST", "Starting INT16 random test (200 iterations)", UVM_NONE)
         seq.start(env.opa_agent.sequencer);
 
+        phase.phase_done.set_drain_time(this, 100ns);
         phase.drop_objection(this);
     endtask
 endclass

@@ -1,7 +1,11 @@
-class llc_int16_seq extends llc_base_seq; 
+class llc_int16_seq extends llc_base_seq;
     `uvm_object_utils(llc_int16_seq)
 
-    task body(); 
+    function new(string name = "llc_int16_seq");
+        super.new(name);
+    endfunction
+
+    task body();
         llc_in_tr tr;
         for(int i = 0; i < 100; i++) begin
             tr = llc_in_tr::type_id::create("tr");

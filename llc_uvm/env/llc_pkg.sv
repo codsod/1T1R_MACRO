@@ -49,13 +49,13 @@ package llc_pkg;
     endclass
 
     // ---- mult_int16 SV 参考模型（纯 SV 实现，无需 DPI-C） ----
-    function automatic bit signed [16:0] mult_int16_ref_lane(
+    function automatic bit signed [34:0] mult_int16_ref_lane(
         input bit [7:0] opa_1, opa_2, opb_1, opb_2,
         input bit [2:0] mode
     );
-        bit signed [7:0] s_opa_1, s_opb_1;
-        bit signed [8:0] s_opa_2, s_opb_2;
-        bit signed [16:0] p0, p1, p2, p3;
+        int signed a_hi, b_hi;
+        int unsigned a_lo, b_lo;
+        longint signed p0, p1, p2, p3;
         bit signed [16:0] tp[4], tp2[4];
         bit signed [1:0] t0_a, t0_b, t1_a, t1_b;
         bit signed [1:0] t2_a, t2_b, t3_a, t3_b;
@@ -64,15 +64,18 @@ package llc_pkg;
 
         case (mode)
         0, 3: begin   // INT16 / BF16
-            s_opa_1 = ($signed(opa_1)) == -1) ? 8'd0 : opa_1;
-            s_opb_1 = ($signed(opb_1)) == -1) ? 8'd0 : opb_1;
-            s_opa_2 = {1'b0, opa_2};
-            s_opb_2 = {1'b0, opb_2};
-            p0 = s_opa_1 * s_opb_1;
-            p1 = s_opa_1 * s_opb_2;
-            p2 = s_opa_2 * s_opb_1;
-            p3 = s_opa_2 * s_opb_2;
-            return (p0 << 16) + (p1 << 8) + (p2 << 8) + p3;
+            a_hi = $signed(opa_1);
+            b_hi = $signed(opb_1);
+            if (a_hi == -1) a_hi = 0;
+            if (b_hi == -1) b_hi = 0;
+            a_lo = opa_2;
+            b_lo = opb_2;
+
+            p0 = a_hi * b_hi;
+            p1 = a_hi * b_lo;
+            p2 = a_lo * b_hi;
+            p3 = a_lo * b_lo;
+            return (p0 * 65536) + ((p1 + p2) * 256) + p3;
         end
         1: begin      // INT8
             return $signed(opa_2) * $signed(opb_2)
@@ -109,12 +112,20 @@ package llc_pkg;
         input bit [2:0] mode
     );
         bit signed [41:0] sum = 0;
+        bit [1023:0] opa_mask;
+        bit [1023:0] opb_mask;
+
+        opa_mask = opa & mask;
+        opb_mask = opb & mask;
+
         for (int i = 0; i< 64; i++) begin
-            bit [15:0] oa = opa[i*16 +: 16];
-            bit [15:0] ob = opb[i*16 +: 16];
-            if (!mask[i]) continue;
-            sum += mult_int16_ref_lane(oa[15:8], oa[7:0], ob[15:8], ob[7:0], mode);
+            bit [15:0] oa = opa_mask[i*16 +: 16];
+            bit [15:0] ob = opb_mask[i*16 +: 16];
+            bit signed [34:0] lane;
+            lane = mult_int16_ref_lane(oa[15:8], oa[7:0], ob[15:8], ob[7:0], mode);
+            sum = sum + $signed(lane);
         end
+        return sum;
     endfunction
 
 endpackage

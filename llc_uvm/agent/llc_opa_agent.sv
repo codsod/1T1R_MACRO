@@ -1,4 +1,8 @@
-class llc_opa_driver extends uvm_driver #(llc_in_tr); 
+import uvm_pkg::*;
+`include "uvm_macros.svh"
+import llc_pkg::*;
+
+class llc_opa_driver extends uvm_driver#(llc_in_tr);
     `uvm_component_utils(llc_opa_driver)
     function new(string name, uvm_component parent);
         super.new(name, parent);
@@ -30,6 +34,7 @@ class llc_opa_driver extends uvm_driver #(llc_in_tr);
             seq_item_port.get_next_item(req);
             vif.drv_cb.opa  <= req.opa;
             vif.drv_cb.opb  <= req.opb;
+            vif.drv_cb.mode <= req.mode;
             vif.drv_cb.mask <= req.mask;
             vif.drv_cb.vldi <= 1'b1;
             @(vif.drv_cb);

@@ -11,4 +11,3 @@ class llc_base_test extends uvm_test;
         env = llc_env::type_id::create("env", this);
     endfunction
 endclass
-EOF

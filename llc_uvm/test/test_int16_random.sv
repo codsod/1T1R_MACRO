@@ -1,6 +1,10 @@
 class test_int16_random extends llc_base_test;
     `uvm_component_utils(test_int16_random)
 
+    function new(string name = "test_int16_random", uvm_component parent = null);
+        super.new(name, parent);
+    endfunction
+
     task run_phase(uvm_phase phase);
         llc_int16_seq seq;
 

@@ -38,4 +38,3 @@ module llc_tb_top;
         run_test();
     end
 endmodule
-EOF
